@@ -1,36 +1,70 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+# Teste Design Pattern
 
-First, run the development server:
+Fiz esse projeto só para testar um design pattern, e gostaria opnião de todos, para saber se algo deve ser melhorado.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+``` typescript
+import { ButtonHTMLAttributes } from 'react'
+import { cn } from '../service/utils'
+
+interface NotificationProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  children: React.ReactNode
+}
+
+export function Notification({ children, className }: NotificationProps) {
+  return (
+    <div
+      className={cn(
+        'bg-neutral-950 text-neutral-50 rounded-md px-4 py-2 flex justify-center items-center gap-3',
+        className,
+      )}
+    >
+      {children}
+    </div>
+  )
+}
+
+export function NotificationContent({
+  children,
+  className,
+}: NotificationProps) {
+  return <div className={cn('flex flex-col', className)}>{children}</div>
+}
+
+export function NotificationTitle({ children, className }: NotificationProps) {
+  return <h2 className={cn('text-sm', className)}>{children}</h2>
+}
+
+export function NotificationDescription({
+  children,
+  className,
+}: NotificationProps) {
+  return (
+    <p className={cn('text-xs text-neutral-200/30', className)}>{children}</p>
+  )
+}
+
+export function NotificationActions({
+  children,
+  className,
+}: NotificationProps) {
+  return <div className={cn('flex gap-2', className)}>{children}</div>
+}
+
+export function NotificationAction({
+  children,
+  className,
+  ...props
+}: NotificationProps) {
+  return (
+    <button className={cn('p-2 rounded-sm', className)} {...props}>
+      {children}
+    </button>
+  )
+}
+
+export function NotificationIcon({ children, className }: NotificationProps) {
+  return <div className={cn('text-purple-500', className)}>{children}</div>
+}
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
